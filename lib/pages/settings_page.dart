@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatefulWidget {
+  final Function(ThemeMode) changeTheme;
+
+  const SettingsPage({Key? key, required this.changeTheme}) : super(key: key);
+
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }
@@ -12,39 +16,59 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Settings'),
-        backgroundColor: Colors.green,
-        foregroundColor: Colors.white,
-      ),
-      body: ListView(
-        padding: EdgeInsets.all(16),
+    final bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
+    return SingleChildScrollView(
+      padding: EdgeInsets.all(16),
+      child: Column(
         children: [
           // Profile Section
           Card(
+            color: Theme.of(context).cardColor,
             child: ListTile(
               leading: CircleAvatar(
                 backgroundColor: Colors.green,
                 child: Icon(Icons.person, color: Colors.white),
               ),
-              title: Text('Username'),
-              subtitle: Text('Current user profile'),
-              trailing: Icon(Icons.edit),
+              title: Text(
+                'Username',
+                style: TextStyle(
+                  color: isDarkMode ? Colors.white : Colors.black,
+                ),
+              ),
+              subtitle: Text(
+                'Current user profile',
+                style: TextStyle(
+                  color: isDarkMode ? Colors.grey[300] : Colors.grey[600],
+                ),
+              ),
+              trailing: Icon(Icons.edit, color: Colors.green),
               onTap: () {
                 // Edit profile
               },
             ),
           ),
           SizedBox(height: 16),
-          // Settings Options
+
+          // Appearance Settings
           Card(
+            color: Theme.of(context).cardColor,
             child: Column(
               children: [
                 ListTile(
                   leading: Icon(Icons.language, color: Colors.green),
-                  title: Text('Language'),
-                  subtitle: Text(_selectedLanguage),
+                  title: Text(
+                    'Language',
+                    style: TextStyle(
+                      color: isDarkMode ? Colors.white : Colors.black,
+                    ),
+                  ),
+                  subtitle: Text(
+                    _selectedLanguage,
+                    style: TextStyle(
+                      color: isDarkMode ? Colors.grey[300] : Colors.grey[600],
+                    ),
+                  ),
                   trailing: DropdownButton<String>(
                     value: _selectedLanguage,
                     onChanged: (String? newValue) {
@@ -56,15 +80,45 @@ class _SettingsPageState extends State<SettingsPage> {
                         .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value),
+                        child: Text(
+                          value,
+                          style: TextStyle(color: Colors.black),
+                        ),
                       );
                     }).toList(),
                   ),
                 ),
                 Divider(),
                 ListTile(
+                  leading: Icon(
+                    isDarkMode ? Icons.dark_mode : Icons.light_mode,
+                    color: Colors.green,
+                  ),
+                  title: Text(
+                    'Dark Mode',
+                    style: TextStyle(
+                      color: isDarkMode ? Colors.white : Colors.black,
+                    ),
+                  ),
+                  trailing: Switch(
+                    value: isDarkMode,
+                    onChanged: (bool value) {
+                      widget.changeTheme(
+                          value ? ThemeMode.dark : ThemeMode.light
+                      );
+                    },
+                    activeColor: Colors.green,
+                  ),
+                ),
+                Divider(),
+                ListTile(
                   leading: Icon(Icons.notifications, color: Colors.green),
-                  title: Text('Push Notifications'),
+                  title: Text(
+                    'Push Notifications',
+                    style: TextStyle(
+                      color: isDarkMode ? Colors.white : Colors.black,
+                    ),
+                  ),
                   trailing: Switch(
                     value: _notifications,
                     onChanged: (bool value) {
@@ -78,7 +132,12 @@ class _SettingsPageState extends State<SettingsPage> {
                 Divider(),
                 ListTile(
                   leading: Icon(Icons.location_on, color: Colors.green),
-                  title: Text('Location Services'),
+                  title: Text(
+                    'Location Services',
+                    style: TextStyle(
+                      color: isDarkMode ? Colors.white : Colors.black,
+                    ),
+                  ),
                   trailing: Switch(
                     value: _locationServices,
                     onChanged: (bool value) {
@@ -92,8 +151,13 @@ class _SettingsPageState extends State<SettingsPage> {
                 Divider(),
                 ListTile(
                   leading: Icon(Icons.help, color: Colors.green),
-                  title: Text('Help & Support'),
-                  trailing: Icon(Icons.arrow_forward_ios),
+                  title: Text(
+                    'Help & Support',
+                    style: TextStyle(
+                      color: isDarkMode ? Colors.white : Colors.black,
+                    ),
+                  ),
+                  trailing: Icon(Icons.arrow_forward_ios, size: 16),
                   onTap: () {
                     // Navigate to help
                   },
@@ -101,8 +165,13 @@ class _SettingsPageState extends State<SettingsPage> {
                 Divider(),
                 ListTile(
                   leading: Icon(Icons.security, color: Colors.green),
-                  title: Text('Privacy Center'),
-                  trailing: Icon(Icons.arrow_forward_ios),
+                  title: Text(
+                    'Privacy Center',
+                    style: TextStyle(
+                      color: isDarkMode ? Colors.white : Colors.black,
+                    ),
+                  ),
+                  trailing: Icon(Icons.arrow_forward_ios, size: 16),
                   onTap: () {
                     // Navigate to privacy
                   },
@@ -110,9 +179,19 @@ class _SettingsPageState extends State<SettingsPage> {
                 Divider(),
                 ListTile(
                   leading: Icon(Icons.account_circle, color: Colors.green),
-                  title: Text('Account Status'),
-                  subtitle: Text('Active'),
-                  trailing: Icon(Icons.arrow_forward_ios),
+                  title: Text(
+                    'Account Status',
+                    style: TextStyle(
+                      color: isDarkMode ? Colors.white : Colors.black,
+                    ),
+                  ),
+                  subtitle: Text(
+                    'Active',
+                    style: TextStyle(
+                      color: isDarkMode ? Colors.grey[300] : Colors.grey[600],
+                    ),
+                  ),
+                  trailing: Icon(Icons.arrow_forward_ios, size: 16),
                   onTap: () {
                     // Check account status
                   },
@@ -121,6 +200,7 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ),
           SizedBox(height: 16),
+
           // Danger Zone
           Card(
             color: Colors.red[50],
@@ -128,8 +208,7 @@ class _SettingsPageState extends State<SettingsPage> {
               children: [
                 ListTile(
                   leading: Icon(Icons.exit_to_app, color: Colors.red),
-                  title: Text('Sign Out',
-                      style: TextStyle(color: Colors.red)),
+                  title: Text('Sign Out', style: TextStyle(color: Colors.red)),
                   onTap: () {
                     _showSignOutDialog();
                   },
@@ -137,8 +216,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 Divider(),
                 ListTile(
                   leading: Icon(Icons.delete, color: Colors.red),
-                  title: Text('Delete Account',
-                      style: TextStyle(color: Colors.red)),
+                  title: Text('Delete Account', style: TextStyle(color: Colors.red)),
                   onTap: () {
                     _showDeleteAccountDialog();
                   },
