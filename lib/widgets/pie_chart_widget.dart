@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 class PieChartWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       width: 120,
       height: 120,
@@ -11,7 +13,7 @@ class PieChartWidget extends StatelessWidget {
           CircularProgressIndicator(
             value: 0.78,
             strokeWidth: 12,
-            backgroundColor: Colors.grey[300],
+            backgroundColor: isDarkMode ? Colors.grey[800] : Colors.grey[300],
             valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
           ),
           Center(
@@ -30,7 +32,7 @@ class PieChartWidget extends StatelessWidget {
                   'Overall',
                   style: TextStyle(
                     fontSize: 12,
-                    color: Colors.grey,
+                    color: isDarkMode ? Colors.grey[400] : Colors.grey[600],
                   ),
                 ),
               ],
