@@ -1,178 +1,147 @@
+// lib/pages/intro_page.dart
+
 import 'package:flutter/material.dart';
+import 'login_page.dart'; // Import the LoginPage for the custom route
+import 'package:google_fonts/google_fonts.dart'; // Make sure this import is present
 
 class IntroPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Column(
-          children: [
-            // Top section with image/logo
-            Expanded(
-              flex: 2,
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.green[50],
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(40),
-                    bottomRight: Radius.circular(40),
+      body: Stack(
+        children: [
+          // Background Image
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/backgrounds/intro_page.jpg"),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          // Darker Overlay for text readability
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Colors.black.withOpacity(0.4),
+                  Colors.black.withOpacity(0.2),
+                  Colors.black.withOpacity(0.4),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+            ),
+          ),
+          // Content
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 40.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Spacer(),
+                  // Main Title with Google Font
+                  Text(
+                    'Todays\ninsights for\ntomorrows wild',
+                    style: GoogleFonts.lora( // Using Lora font
+                      fontSize: 48,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      height: 1.2,
+                      shadows: [
+                        const Shadow(
+                          blurRadius: 10.0,
+                          color: Colors.black54,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                child: Stack(
-                  children: [
-                    // Background pattern
-                    Positioned(
-                      top: 50,
-                      right: 30,
-                      child: Icon(
-                        Icons.park,
-                        size: 80,
-                        color: Colors.green[100],
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 80,
-                      left: 40,
-                      child: Icon(
-                        Icons.eco,
-                        size: 60,
-                        color: Colors.green[100],
-                      ),
-                    ),
-                    // Main logo
-                    Center(
-                      child: Container(
-                        width: 200,
-                        height: 200,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 20,
-                              color: Colors.green.withOpacity(0.2),
-                              spreadRadius: 5,
-                            )
-                          ],
+                  const Spacer(),
+                  // Sign In Button
+                  SizedBox(
+                    width: double.infinity,
+                    height: 55,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).push(_createLoginRoute());
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white.withOpacity(0.2),
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
                         ),
-                        child: Icon(
-                          Icons.forest,
-                          size: 80,
-                          color: Colors.green,
+                        elevation: 0,
+                        side: BorderSide(color: Colors.white.withOpacity(0.3), width: 1.5),
+                      ),
+                      child: Text(
+                        'Sign in',
+                        style: GoogleFonts.lato( // Using Lato font
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 20),
+                  // Create an account Button
+                  SizedBox(
+                    width: double.infinity,
+                    height: 55,
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.of(context).push(_createLoginRoute());
+                      },
+                      style: TextButton.styleFrom(
+                        foregroundColor: Colors.white.withOpacity(0.8),
+                      ),
+                      child: Text(
+                        'Create an account',
+                        style: GoogleFonts.lato( // Using Lato font
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-
-            // Bottom section with text and button
-            Expanded(
-              flex: 1,
-              child: Padding(
-                padding: const EdgeInsets.all(30.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // App Title
-                    Text(
-                      'DATAFOREST',
-                      style: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.green[800],
-                        letterSpacing: 1.5,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-
-                    // Tagline
-                    Row(
-                      children: [
-                        Text(
-                          'Forest Data ',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.green[600],
-                          ),
-                        ),
-                        Text(
-                          'Analytics *',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.green,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 30),
-
-                    // Explore Button
-                    SizedBox(
-                      width: double.infinity,
-                      height: 55,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/login');
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
-                          foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          elevation: 3,
-                        ),
-                        child: Text(
-                          'Explore',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    SizedBox(height: 20),
-
-                    // Sign up prompt
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Don't have an account? ",
-                          style: TextStyle(
-                            color: Colors.grey[600],
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            // Navigate to sign up page
-                            Navigator.pushNamed(context, '/login');
-                          },
-                          child: Text(
-                            'Sign up',
-                            style: TextStyle(
-                              color: Colors.green,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
+    );
+  }
+
+  // Animation method (unchanged)
+  Route _createLoginRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => LoginPage(),
+      transitionDuration: const Duration(milliseconds: 600),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        const curve = Curves.easeOutQuint;
+
+        final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        final slideAnimation = animation.drive(tween);
+
+        final fadeAnimation = CurvedAnimation(
+          parent: animation,
+          curve: Curves.easeIn,
+        );
+
+        return FadeTransition(
+          opacity: fadeAnimation,
+          child: SlideTransition(
+            position: slideAnimation,
+            child: child,
+          ),
+        );
+      },
     );
   }
 }
