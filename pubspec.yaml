@@ -10,16 +10,28 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  # UI & Navigation
   google_nav_bar: ^5.0.7
   page_transition: ^2.0.9
   cupertino_icons: ^1.0.2
+  animations: ^2.0.11
+  google_fonts: ^6.2.1
+
+  # Map & Location
   flutter_map: ^5.0.0
   latlong2: ^0.9.1
   url_launcher: ^6.1.11
   geolocator: ^10.0.0
+
+  # Networking & Storage
   http: ^1.1.0
-  animations: ^2.0.11
-  google_fonts: ^6.2.1
+  shared_preferences: ^2.2.2
+
+  # Additional Packages
+  carousel_slider: ^4.2.1
+  share_plus: ^7.2.2
+  image_picker: ^1.0.7
 
 dev_dependencies:
   flutter_test:
@@ -28,6 +40,14 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
   assets:
     - assets/images/backgrounds/intro_page.jpg
     - assets/images/backgrounds/login_page.jpg
+    - assets/images/formoson clouded leopard.webp
+    - assets/images/crested ibis.jpg
+    - assets/images/grey wolf.jpeg
+    - assets/images/Mikado pheasant.webp
+    - assets/images/Taiwan blue magpie.webp
+    - assets/images/taiwan mountain dog.jpeg
+    - assets/images/taiwan sika deer.jpeg

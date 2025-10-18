@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'login_page.dart'; // Import the LoginPage for the custom route
+import 'signup_page.dart'; // Import the SignupPage
 import 'package:google_fonts/google_fonts.dart'; // Make sure this import is present
 
 class IntroPage extends StatelessWidget {
@@ -87,13 +88,13 @@ class IntroPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  // Create an account Button
+                  // Create an account Button - UPDATED
                   SizedBox(
                     width: double.infinity,
                     height: 55,
                     child: TextButton(
                       onPressed: () {
-                        Navigator.of(context).push(_createLoginRoute());
+                        Navigator.of(context).push(_createSignupRoute());
                       },
                       style: TextButton.styleFrom(
                         foregroundColor: Colors.white.withOpacity(0.8),
@@ -116,10 +117,39 @@ class IntroPage extends StatelessWidget {
     );
   }
 
-  // Animation method (unchanged)
+  // Animation method for Login Page (unchanged)
   Route _createLoginRoute() {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => LoginPage(),
+      transitionDuration: const Duration(milliseconds: 600),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        const curve = Curves.easeOutQuint;
+
+        final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        final slideAnimation = animation.drive(tween);
+
+        final fadeAnimation = CurvedAnimation(
+          parent: animation,
+          curve: Curves.easeIn,
+        );
+
+        return FadeTransition(
+          opacity: fadeAnimation,
+          child: SlideTransition(
+            position: slideAnimation,
+            child: child,
+          ),
+        );
+      },
+    );
+  }
+
+  // NEW: Animation method for Sign Up Page
+  Route _createSignupRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => SignupPage(),
       transitionDuration: const Duration(milliseconds: 600),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(0.0, 1.0);
